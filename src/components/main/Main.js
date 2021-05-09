@@ -17,29 +17,16 @@ import { formatSearch } from "../utils/formatters";
 export default function Main() {
   const [show, setShow] = useState({
     formattedShow: {},
-    searchValue: "",
     id: getRandomShowId(),
     seasons: [],
     episodes: [],
   });
-
-  const updateSearchValue = (value) => {
-    setShow({ ...show, searchValue: value });
-  };
 
   const updateFormattedShow = (data) => {
     setShow({
       ...show,
       id: data.id,
       formattedShow: formatSeries(data),
-    });
-  };
-
-  const handleEpisodesAndSeasons = (data) => {
-    setShow({
-      ...show,
-      seasons: formatSeasonsCount(data),
-      episodes: data,
     });
   };
 
@@ -57,8 +44,8 @@ export default function Main() {
     });
   };
 
-  const onSearch = useCallback(async () => {
-    const result = await getShowByName(show.searchValue);
+  const onSearch = useCallback(async (value) => {
+    const result = await getShowByName(value);
     updateFormattedShow(formatSearch(result));
   }, []);
 
@@ -66,7 +53,7 @@ export default function Main() {
 
   return (
     <main>
-      <SearchBar searchValue={updateSearchValue} onSearch={() => onSearch()} />
+      <SearchBar onSearch={(value) => onSearch(value)} />
       <Series currentSeries={show.formattedShow} />
       <Replace seasonCount={show.seasonCount} episodes={show.episodes} />
     </main>

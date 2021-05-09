@@ -1,12 +1,13 @@
+import { useState } from "react";
 import "./search-bar.css";
 
-export default function SearchBar(props) {
-  const updateSearchValue = (event) => {
-    props.searchValue(event.target.value);
-  };
+export default function SearchBar({ onSearch }) {
+  const [search, setSearch] = useState("");
+
+  const handleSearchChange = (event) => setSearch(event.target.value);
 
   const handleKeypress = (event) => {
-    if (event.code === "Enter") props.onSearch();
+    if (event.code === "Enter") onSearch(search);
   };
 
   return (
@@ -20,12 +21,12 @@ export default function SearchBar(props) {
             className="searchBox"
             type="search"
             placeholder="Enter a TV show"
-            onChange={updateSearchValue}
+            onChange={handleSearchChange}
             onKeyPress={handleKeypress}
           />
         </div>
         <div className="col-sm-4 searchButton">
-          <button onClick={props.onSearch}>Search</button>
+          <button onClick={() => onSearch(search)}>Search</button>
         </div>
       </div>
     </div>
