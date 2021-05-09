@@ -1,4 +1,6 @@
-export const getRandomShowId = () => 1 + Math.random() * (60000 - 1);
+import { formatDate } from "../../components/utils/date-util";
+
+export const getRandomShowId = () => Math.floor(Math.random() * 55000) + 1;
 
 export const formatSeries = (series) => {
   console.log("series :>> ", series);
@@ -11,5 +13,6 @@ export const formatSeries = (series) => {
   return {
     name: series.name,
     genres: series.genres && series.genres.length ? series.genres : [],
+    premiered: series.premiered ? formatDate(series.premiered) : "",
   };
 };

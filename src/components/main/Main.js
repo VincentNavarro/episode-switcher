@@ -9,9 +9,9 @@ export default function Main() {
   let currentSeries;
   const [series, setSeries] = useState(null);
   useEffect(async () => {
-    const response = await fetch(`${BASE_URL}/shows/1?embed=cast`)
-      .then((response) => response.json())
-      .then((data) => setSeries(formatSeries(data)));
+    const response = await getRandomSeries().then((data) =>
+      setSeries(formatSeries(data))
+    );
   }, []);
 
   return (

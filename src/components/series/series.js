@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { getRandomSeries } from "../../services/tv-maze-api-client";
+import { formatDate } from "../utils/date-util";
 
 export default function Series({ currentSeries }) {
-  const { name, premieredDate } = currentSeries || {};
+  const { name, premiered } = currentSeries || {};
   console.log("currentSeries :>> ", currentSeries);
   let randomList;
 
@@ -11,9 +12,7 @@ export default function Series({ currentSeries }) {
       ? `${currentSeries.genres.join(", ")} | `
       : "";
 
-  const formattedPremieredDate = premieredDate
-    ? `Premiered on ${premieredDate}`
-    : "";
+  const formattedPremieredDate = premiered ? `Premiered on ${premiered}` : "";
 
   return (
     <div>
