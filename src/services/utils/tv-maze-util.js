@@ -1,5 +1,4 @@
-import { formatDate } from "../../components/utils/formatters/date-formatter";
-import { formatSummary } from "../../components/utils/formatters/summary-formatter";
+import { formatDate, formatSummary } from "../../components/utils/formatters";
 
 export const getRandomShowId = () => Math.floor(Math.random() * 55000) + 1;
 
