@@ -1,5 +1,12 @@
+import { useState } from "react";
+
 export default function Replace(props) {
-  //   console.log("props :>> ", props);
+  const [values, setValues] = useState({
+    currentSeason: [],
+    episodes: [],
+  });
+
+  console.log("props :>> ", props);
   const handleSeasonChange = (event) => {
     console.log("event :>> ", event.target.value);
   };
@@ -26,7 +33,7 @@ export default function Replace(props) {
           </select>
         </div>
         <div className="col">
-          <button onClick={props.setShow}>Search</button>
+          <button onClick={(show) => props.onReplace()}>Search</button>
         </div>
       </div>
     </div>

@@ -12,14 +12,14 @@ export const formatSeries = (series) => {
   };
 };
 
-export const formatEpisodesToSeasons = (episodes) => {
-  // use filter
-  // episodes.filter(episde => episode.season === 1)
-  return episodes.map((episode) => episode["id"]);
-
-  // IN THE OPTION THING DO MAP AND DO CONCAT OF STRING
-};
-
 export const formatSeasonsCount = (episodes) => [
   ...new Set(episodes.map((episode) => episode["season"])),
 ];
+
+export const formatSeasons = (episodes) => {
+  const seasonArray = formatSeasonsCount(episodes);
+  return seasonArray.map((count) => ({
+    season: count,
+    episodes: episodes.filter((episode) => episode.season === count),
+  }));
+};

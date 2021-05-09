@@ -1,7 +1,6 @@
 import "./series.css";
 
 export default function Series({ currentSeries }) {
-  console.log("currentSeries :>> ", currentSeries);
   const { name, premiered, summary, image } = currentSeries || {};
 
   const formattedGenres =
