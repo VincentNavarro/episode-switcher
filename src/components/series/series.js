@@ -2,19 +2,26 @@ import { useState } from "react";
 import { getRandomSeries } from "../../services/tv-maze-api-client";
 
 export default function Series({ currentSeries }) {
+  const { name, premieredDate } = currentSeries || {};
   console.log("currentSeries :>> ", currentSeries);
   let randomList;
 
-  //   const renderGenres = currentSeries.genres.length
-  //     ? currentSeries.genres.join(", ")
-  //     : "";
+  const formattedGenres =
+    currentSeries && currentSeries.genres.length
+      ? `${currentSeries.genres.join(", ")} | `
+      : "";
 
-  //   const formattedSeries = callSeries();
+  const formattedPremieredDate = premieredDate
+    ? `Premiered on ${premieredDate}`
+    : "";
 
-  //   console.log(" formattedSeries :>> ", Promise.resolve(formattedSeries));
   return (
     <div>
-      <h1>Yo there</h1>
+      <h1 className="seriesName">{name}</h1>
+      <h1 className="seriesInfo">
+        {formattedGenres}
+        {formattedPremieredDate}
+      </h1>
     </div>
   );
 }
