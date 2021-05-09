@@ -11,3 +11,15 @@ export const formatSeries = (series) => {
     image: series.image && series.image.medium ? series.image.medium : "",
   };
 };
+
+export const formatEpisodesToSeasons = (episodes) => {
+  // use filter
+  // episodes.filter(episde => episode.season === 1)
+  return episodes.map((episode) => episode["id"]);
+
+  // IN THE OPTION THING DO MAP AND DO CONCAT OF STRING
+};
+
+export const formatSeasonsCount = (episodes) => [
+  ...new Set(episodes.map((episode) => episode["season"])),
+];

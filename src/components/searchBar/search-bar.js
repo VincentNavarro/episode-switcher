@@ -6,13 +6,13 @@ export default function SearchBar(props) {
   };
 
   const handleKeypress = (event) => {
-    if (event.code === "Enter") props.fetchSeries();
+    if (event.code === "Enter") props.onSearch();
   };
 
   return (
     <div className="container searchBar">
       <div className="row">
-        <div className="col-sm-10">
+        <div className="col-sm-4">
           <h2>Episode Switcher</h2>
         </div>
         <div className="col-sm-3">
@@ -24,8 +24,8 @@ export default function SearchBar(props) {
             onKeyPress={handleKeypress}
           />
         </div>
-        <div className="searchButton">
-          <button onClick={props.fetchSeries}>Search</button>
+        <div className="col-sm-4 searchButton">
+          <button onClick={props.onSearch}>Search</button>
         </div>
       </div>
     </div>
