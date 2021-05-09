@@ -17,18 +17,20 @@ import Series from "../series/series";
 import { formatSearch } from "../utils/formatters";
 
 export default function Main() {
-  const [show, setShow] = useState({
+  const initialState = {
     formattedShow: {},
-    id: getRandomShowId(),
+    id: "",
     seasons: [],
-  });
+  };
+
+  const [show, setShow] = useState(initialState);
 
   const fetchShowAndEpisodes = async (fetchedShow = {}) => {
     let showData;
     let episodesData;
 
     if (!Object.keys(fetchedShow).length) {
-      await getShowById(show.id).then((data) => (showData = data));
+      await getShowById(getRandomShowId()).then((data) => (showData = data));
     } else {
       showData = fetchedShow;
     }
@@ -72,7 +74,7 @@ export default function Main() {
 
     // throw error if no episode is returned
 
-    // get show by number (season and nubmer)
+    // get show by number (season and number)
 
     // .replace in episode array the new episode
   });
@@ -81,14 +83,18 @@ export default function Main() {
 
   return (
     <main>
-      <SearchBar onSearch={(value) => onSearch(value)} />
-      <Series currentSeries={show.formattedShow} />
-      <Replace
-        seasons={show.seasons}
-        onReplace={(showName, season, episode) =>
-          onReplace(showName, season, episode)
-        }
-      />
+      {show !== initialState ? (
+        <div>
+          <SearchBar onSearch={(value) => onSearch(value)} />
+          <Series currentSeries={show.formattedShow} />
+          <Replace
+            seasons={show.seasons}
+            onReplace={(showName, season, episode) =>
+              onReplace(showName, season, episode)
+            }
+          />
+        </div>
+      ) : null}
     </main>
   );
 }

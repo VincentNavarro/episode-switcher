@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Replace(props) {
+export default function Replace({ seasons, onReplace }) {
   const [values, setValues] = useState({
-    currentSeason: [],
-    episodes: [],
+    selectedSeason: 1,
+    selectedEpisode: 1,
   });
 
-  console.log("props :>> ", props);
   const handleSeasonChange = (event) => {
-    console.log("event :>> ", event.target.value);
+    console.log("event.target :>> ", event.target);
+    return setValues({
+      selectedSeason: event.target.selectedIndex + 1,
+      selectedEpisode: 1,
+    });
   };
+
+  const handleEpisodeChange = (event) =>
+    setValues({
+      selectedSeason: values.selectedSeason,
+      selectedEpisode: event.target.selectedIndex + 1,
+    });
 
   return (
     <div className="container">
@@ -21,19 +30,22 @@ export default function Replace(props) {
             className="seasons"
             onChange={handleSeasonChange}
           >
-            {/* IN HERE DO MAP AND CONCAT
-            {seasons.map(season => (<option>Season {season.seasonNumber??}</option>))}
-            FINISH HERE
-            YOUR THOUGHT PROCESS WAS TO MAP THROUGH AND GET THE SEASON NUMBER
- */}
-
-            <option>Season 1</option>
-            <option>Season 2</option>
-            <option>Season 3</option>
+            {seasons.map((s) => (
+              <option key={`season-${s.season}`}>Season {s.season}</option>
+            ))}
+          </select>
+          <select
+            name="episodes"
+            className="episodes"
+            onChange={handleEpisodeChange}
+          >
+            {seasons[values.selectedSeason - 1].episodes.map((e) => (
+              <option key={`episode-${e.number}`}>Episode {e.number}</option>
+            ))}
           </select>
         </div>
         <div className="col">
-          <button onClick={(show) => props.onReplace()}>Search</button>
+          <button onClick={() => onReplace()}>Search</button>
         </div>
       </div>
     </div>
