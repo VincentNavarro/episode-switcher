@@ -1,22 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { getRandomSeries } from "../../services/tv-maze-api-client";
+import {
+  getRandomSeries,
+  getSeriesByName,
+} from "../../services/tv-maze-api-client";
 import { formatSeries } from "../../services/utils/tv-maze-util";
+import SearchBar from "../searchBar/search-bar";
 import Series from "../series/series";
+import { formatSearch } from "../utils/formatters";
 
-const BASE_URL = "http://api.tvmaze.com";
+const RANDOM = "random";
+const SEARCH = "search";
 
 export default function Main() {
   let currentSeries;
-  const [series, setSeries] = useState(null);
-  useEffect(async () => {
-    const response = await getRandomSeries().then((data) =>
-      setSeries(formatSeries(data))
-    );
+  const [values, setValues] = useState({
+    formattedSeries: {},
+    searchValue: "",
+  });
+
+  const updateSearchValue = (value) => {
+    setValues({ ...values, searchValue: value });
+  };
+
+  const updateFormattedSeries = (data) => {
+    setValues({ ...values, formattedSeries: formatSeries(data) });
+  };
+
+  const fetchSeries = React.useCallback(async (searchType) => {
+    if (searchType === RANDOM) {
+      await getRandomSeries().then((data) => updateFormattedSeries(data));
+    } else {
+      const result = await getSeriesByName(searchType);
+      updateFormattedSeries(formatSearch(result));
+    }
   }, []);
+
+  useEffect(() => {
+    fetchSeries(RANDOM);
+  }, [fetchSeries]);
+
+  console.log("values :>> ", values);
 
   return (
     <main>
-      <Series currentSeries={series} />
+      <SearchBar
+        searchValue={updateSearchValue}
+        fetchSeries={() => fetchSeries(values.searchValue)}
+      />
+      <Series currentSeries={values.formattedSeries} />
     </main>
   );
 }
