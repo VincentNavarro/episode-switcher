@@ -1,4 +1,5 @@
-import { formatDate } from "../../components/utils/date-util";
+import { formatDate } from "../../components/utils/formatters/date-formatter";
+import { formatSummary } from "../../components/utils/formatters/summary-formatter";
 
 export const getRandomShowId = () => Math.floor(Math.random() * 55000) + 1;
 
@@ -14,5 +15,6 @@ export const formatSeries = (series) => {
     name: series.name,
     genres: series.genres && series.genres.length ? series.genres : [],
     premiered: series.premiered ? formatDate(series.premiered) : "",
+    summary: series.summary ? formatSummary(series.summary) : "",
   };
 };
