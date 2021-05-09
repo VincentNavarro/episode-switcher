@@ -9,7 +9,7 @@ export const getSeriesByName = (name) => {
 };
 
 export const getRandomSeries = async () => {
-  return fetch(
-    `${BASE_URL}/shows/${getRandomShowId()}?embed=cast`
-  ).then((response) => response.json());
+  return fetch(`${BASE_URL}/shows/${getRandomShowId()}`).then((response) =>
+    response.json()
+  );
 };

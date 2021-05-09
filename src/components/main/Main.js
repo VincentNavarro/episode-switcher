@@ -8,11 +8,7 @@ import SearchBar from "../searchBar/search-bar";
 import Series from "../series/series";
 import { formatSearch } from "../utils/formatters";
 
-const RANDOM = "random";
-const SEARCH = "search";
-
 export default function Main() {
-  let currentSeries;
   const [values, setValues] = useState({
     formattedSeries: {},
     searchValue: "",
@@ -26,20 +22,18 @@ export default function Main() {
     setValues({ ...values, formattedSeries: formatSeries(data) });
   };
 
-  const fetchSeries = React.useCallback(async (searchType) => {
-    if (searchType === RANDOM) {
-      await getRandomSeries().then((data) => updateFormattedSeries(data));
-    } else {
-      const result = await getSeriesByName(searchType);
+  const fetchSeries = React.useCallback(async (searchValue = "") => {
+    if (searchValue) {
+      const result = await getSeriesByName(searchValue);
       updateFormattedSeries(formatSearch(result));
+    } else {
+      await getRandomSeries().then((data) => updateFormattedSeries(data));
     }
   }, []);
 
   useEffect(() => {
-    fetchSeries(RANDOM);
+    fetchSeries();
   }, [fetchSeries]);
-
-  console.log("values :>> ", values);
 
   return (
     <main>
