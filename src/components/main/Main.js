@@ -18,8 +18,8 @@ export default function Main() {
   const [show, setShow] = useState({
     formattedShow: {},
     searchValue: "",
-    showId: getRandomShowId(),
-    seasonsCount: [],
+    id: getRandomShowId(),
+    seasons: [],
     episodes: [],
   });
 
@@ -30,7 +30,7 @@ export default function Main() {
   const updateFormattedShow = (data) => {
     setShow({
       ...show,
-      showId: data.id,
+      id: data.id,
       formattedShow: formatSeries(data),
     });
   };
@@ -43,33 +43,26 @@ export default function Main() {
     });
   };
 
-  const fetchShow = useCallback(async (searchValue = "") => {
-    if (searchValue) {
-      const result = await getShowByName(searchValue);
-      updateFormattedShow(formatSearch(result));
-    } else {
-      await getShowById(show.showId).then((data) => updateFormattedShow(data));
-    }
-  }, []);
+  const fetchShowAndEpisodes = async () => {
+    let showData;
+    let episodesData;
+
+    await getShowById(show.id).then((data) => (showData = data));
+    await getEpisodesById(show.id).then((data) => (episodesData = data));
+
+    setShow({
+      ...show,
+      formattedShow: formatSeries(showData),
+      episodes: episodesData,
+    });
+  };
 
   const onSearch = useCallback(async () => {
     const result = await getShowByName(show.searchValue);
     updateFormattedShow(formatSearch(result));
-  });
-
-  const setEpisodesAndSeasons = useCallback(async () => {
-    return getEpisodesById(show.showId).then((data) =>
-      handleEpisodesAndSeasons(data)
-    );
   }, []);
 
-  useEffect(() => {
-    fetchShow();
-  }, [fetchShow]);
-
-  // useEffect(() => {
-  //   if (episodeChange) setEpisodesAndSeasons();
-  // });
+  useEffect(() => fetchShowAndEpisodes(), []);
 
   return (
     <main>
