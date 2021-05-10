@@ -26,7 +26,10 @@ export default function Main() {
 
   const [show, setShow] = useState(initialState);
 
+  const [loading, setLoading] = useState(false);
+
   const fetchShowAndEpisodes = async (fetchedShow = {}) => {
+    setLoading(true);
     let showData;
     let seasonsInfo;
 
@@ -47,6 +50,7 @@ export default function Main() {
       seasonsInfo,
       episodes,
     });
+    setLoading(false);
   };
 
   const replaceEpisode = (episode) => {
@@ -86,14 +90,17 @@ export default function Main() {
       : replaceEpisode(episodeFetchResponse);
   });
 
-  useEffect(() => fetchShowAndEpisodes(), []);
+  useEffect(() => {
+    fetchShowAndEpisodes();
+  }, []);
 
   return (
     <main>
       {Object.keys(show.formattedShow).length &&
       show.id &&
       show.seasonsInfo.length &&
-      show.episodes.length ? (
+      show.episodes.length &&
+      !loading ? (
         <div>
           <SearchBar onSearch={(value) => onSearch(value)} />
           <Show currentShow={show.formattedShow} />
