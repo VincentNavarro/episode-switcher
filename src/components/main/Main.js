@@ -110,10 +110,7 @@ export default function Main() {
               onReplace(showName, season, episode)
             }
           />
-          <Seasons
-            seasonsInfo={show.seasonsInfo}
-            seasonsEpisodes={show.seasonsEpisodes}
-          />
+          <Seasons seasonsEpisodes={show.seasonsEpisodes} />
         </div>
       ) : (
         <h1>loading</h1>

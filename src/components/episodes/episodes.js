@@ -4,7 +4,7 @@ import "./episodes.css";
 export default function Episodes({ episode }) {
   return (
     <div key={episode.number}>
-      <h5>episode.number</h5>
+      <h5>{episode.number}</h5>
       {episode.image && episode.image.medium ? (
         <img src={episode.image.medium} alt={`episode-${episode.number}`} />
       ) : (
