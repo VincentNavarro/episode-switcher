@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatSeasonsCount } from "../../services/utils/tv-maze-util";
+import { formatSeasonsCount } from "../utils/formatters";
 import "./replace.css";
 
 export default function Replace({ episodes, onReplace }) {

@@ -21,3 +21,17 @@ export const formatSummary = (summary, charLimiit) => {
     ? `${scrubbedString.substr(0, charLimiit)}...`
     : scrubbedString;
 };
+
+export const formatShow = (show) => {
+  return {
+    name: show.name,
+    genres: show.genres && show.genres.length ? show.genres : [],
+    premiered: show.premiered ? formatDate(show.premiered) : "",
+    summary: show.summary ? formatSummary(show.summary, 700) : "",
+    image: show.image && show.image.medium ? show.image.medium : "",
+  };
+};
+
+export const formatSeasonsCount = (episodes) => [
+  ...new Set(episodes.map((episode) => episode["season"])),
+];

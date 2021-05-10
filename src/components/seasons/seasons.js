@@ -1,6 +1,5 @@
-import { formatSeasonsCount } from "../../services/utils/tv-maze-util";
 import Episodes from "../episodes/episodes";
-import { formatDate } from "../utils/formatters";
+import { formatDate, formatSeasonsCount } from "../utils/formatters";
 import "./seasons.css";
 
 export default function Seasons({ episodes }) {

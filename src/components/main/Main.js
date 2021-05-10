@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import "./main.css";
 import {
   getShowById,
   getShowByName,
@@ -6,13 +7,13 @@ import {
   getEpisodeByNumber,
   getSeasonsById,
 } from "../../services/tv-maze-api-client";
-import { formatShow, getRandomShowId } from "../../services/utils/tv-maze-util";
+import { getRandomShowId } from "../../services/utils/tv-maze-util";
 import Replace from "../replace/replace";
 import SearchBar from "../searchBar/search-bar";
 import Seasons from "../seasons/seasons";
 import Show from "../show/show";
 import Error from "../error/error";
-import { formatSearch } from "../utils/formatters";
+import { formatSearch, formatShow } from "../utils/formatters";
 
 export default function Main() {
   const initialState = {
@@ -106,7 +107,9 @@ export default function Main() {
           <Seasons episodes={show.episodes} />
         </div>
       ) : (
-        <h1>loading</h1>
+        <div className="loadingContainer">
+          <h1>&#128640;</h1>
+        </div>
       )}
     </main>
   );
