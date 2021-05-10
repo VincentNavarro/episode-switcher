@@ -59,13 +59,18 @@ export default function Main() {
     });
   };
 
-  // const replaceEpisode = (episode) => {
-  //   show.seasons[episode.season - 1].episodes.splice(
-  //     episode.season - 1,
-  //     1,
-  //     episode
-  //   );
-  // };
+  const replaceEpisode = (episode) => {
+    console.log("episode :>> ", episode);
+    show.seasonsEpisodes.splice(
+      show.seasonsEpisodes.findIndex(
+        (e) => e.number === episode.number && e.season === episode.season
+      ),
+      1,
+      episode
+    );
+
+    setShow({ ...show });
+  };
 
   const onSearch = useCallback(async (value) => {
     const result = await getShowByName(value);
@@ -87,10 +92,10 @@ export default function Main() {
       episode
     );
 
-    console.log("fetchedEpisode :>> ", fetchedEpisode);
+    // console.log("fetchedEpisode :>> ", fetchedEpisode);
     // throw error if no episode is returned
 
-    // replaceEpisode(fetchedEpisode);
+    replaceEpisode(fetchedEpisode);
   });
 
   useEffect(() => fetchShowAndEpisodes(), []);
