@@ -30,27 +30,22 @@ export default function Main() {
   const [show, setShow] = useState(initialState);
 
   const fetchShowAndEpisodes = async (fetchedShow = {}) => {
-    const seasonsEpisodes = [];
     let showData;
     let seasonsInfo;
 
     if (!Object.keys(fetchedShow).length) {
-      await getShowById(getRandomShowId()).then((data) => (showData = data));
+      showData = await getShowById(getRandomShowId());
     } else {
       showData = fetchedShow;
     }
 
-    await getSeasonsById(showData.id).then((data) => (seasonsInfo = data));
+    seasonsInfo = await getSeasonsById(showData.id);
 
-    seasonsInfo.map(async (season) => {
-      await getEpisodesBySeasonId(season.id).then((data) =>
-        seasonsEpisodes.push(data)
-      );
-    });
+    // const seasonsEpisodes = await seasonsInfo.map(
+    //   async (season) => await getEpisodesBySeasonId(season.id)
+    // );
 
-    // console.log("seasonsEpisodes :>> ", seasonsEpisodes);
-
-    // console.log("seasonsEpisodes :>> ", seasonsEpisodes);
+    const seasonsEpisodes = await getEpisodesById(showData.id);
 
     // await getEpisodesById(showData.id).then((data) => (episodesData = data));
 
@@ -81,7 +76,6 @@ export default function Main() {
   }, []);
 
   const onReplace = useCallback(async (showName, season, episode) => {
-    console.log("show.seasonsEpisodes :>> ", show.seasonsEpisodes);
     const showResult = await getShowByName(showName);
     const fetchedShow = formatSearch(showResult);
 
@@ -93,6 +87,7 @@ export default function Main() {
       episode
     );
 
+    console.log("fetchedEpisode :>> ", fetchedEpisode);
     // throw error if no episode is returned
 
     // replaceEpisode(fetchedEpisode);
@@ -105,12 +100,12 @@ export default function Main() {
       {Object.keys(show.formattedShow).length &&
       show.id &&
       show.seasonsInfo.length &&
-      show.seasonsEpisodes ? (
+      show.seasonsEpisodes.length ? (
         <div>
           <SearchBar onSearch={(value) => onSearch(value)} />
           <Show currentShow={show.formattedShow} />
           <Replace
-            seasonsInfo={show.seasonsInfo}
+            seasonsEpisodes={show.seasonsEpisodes}
             onReplace={(showName, season, episode) =>
               onReplace(showName, season, episode)
             }
