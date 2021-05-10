@@ -15,9 +15,9 @@ export const formatDate = (date) => {
   return formattedDate.replace(" ", ". ");
 };
 
-export const formatSummary = (summary) => {
-  const scrubbedString = summary.replace(/<(.|\n)*?>/g, "");
-  return scrubbedString.length >= 700
-    ? `${scrubbedString.substr(0, 700)}...`
+export const formatSummary = (summary, charLimiit) => {
+  const scrubbedString = summary ? summary.replace(/<(.|\n)*?>/g, "") : "";
+  return scrubbedString.length >= charLimiit
+    ? `${scrubbedString.substr(0, charLimiit)}...`
     : scrubbedString;
 };

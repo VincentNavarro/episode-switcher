@@ -3,9 +3,9 @@ import Episodes from "../episodes/episodes";
 import { formatDate } from "../utils/formatters";
 import "./seasons.css";
 
-export default function Seasons({ seasonsEpisodes }) {
+export default function Seasons({ episodes }) {
   const getCurrentSeason = (seasonNumber) =>
-    seasonsEpisodes.filter((episode) => episode.season === seasonNumber);
+    episodes.filter((episode) => episode.season === seasonNumber);
 
   const renderSubtitle = (currentSeason) => {
     return (
@@ -19,12 +19,12 @@ export default function Seasons({ seasonsEpisodes }) {
 
   return (
     <div className="container">
-      {formatSeasonsCount(seasonsEpisodes).map((season) => (
+      {formatSeasonsCount(episodes).map((season) => (
         <div key={`season-${season}`}>
           <h3>{`Season ${season}`}</h3>
           {renderSubtitle(getCurrentSeason(season))}
           {getCurrentSeason(season).map((episode) => (
-            <Episodes episode={episode} />
+            <Episodes episode={episode} key={`episode-${episode.number}`} />
           ))}
         </div>
       ))}

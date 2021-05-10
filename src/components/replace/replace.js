@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { formatSeasonsCount } from "../../services/utils/tv-maze-util";
 
-export default function Replace({ seasonsEpisodes, onReplace }) {
+export default function Replace({ episodes, onReplace }) {
   const [values, setValues] = useState({
     searchValue: "",
     selectedSeason: 1,
@@ -43,7 +43,7 @@ export default function Replace({ seasonsEpisodes, onReplace }) {
             className="seasons"
             onChange={handleSeasonChange}
           >
-            {formatSeasonsCount(seasonsEpisodes).map((_, index) => (
+            {formatSeasonsCount(episodes).map((_, index) => (
               <option key={`season-${index + 1}`}>Season {index + 1}</option>
             ))}
           </select>
@@ -54,7 +54,7 @@ export default function Replace({ seasonsEpisodes, onReplace }) {
           >
             {[
               ...Array(
-                seasonsEpisodes.filter(
+                episodes.filter(
                   (episode) => episode.season === values.selectedSeason
                 ).length
               ),

@@ -7,7 +7,7 @@ export const formatShow = (show) => {
     name: show.name,
     genres: show.genres && show.genres.length ? show.genres : [],
     premiered: show.premiered ? formatDate(show.premiered) : "",
-    summary: show.summary ? formatSummary(show.summary) : "",
+    summary: show.summary ? formatSummary(show.summary, 700) : "",
     image: show.image && show.image.medium ? show.image.medium : "",
   };
 };

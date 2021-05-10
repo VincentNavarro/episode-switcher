@@ -22,9 +22,8 @@ export default function Main() {
   const initialState = {
     formattedShow: {},
     id: "",
-    // seasons: [],
     seasonsInfo: [],
-    seasonsEpisodes: [],
+    episodes: [],
   };
 
   const [show, setShow] = useState(initialState);
@@ -41,11 +40,7 @@ export default function Main() {
 
     seasonsInfo = await getSeasonsById(showData.id);
 
-    // const seasonsEpisodes = await seasonsInfo.map(
-    //   async (season) => await getEpisodesBySeasonId(season.id)
-    // );
-
-    const seasonsEpisodes = await getEpisodesById(showData.id);
+    const episodes = await getEpisodesById(showData.id);
 
     // await getEpisodesById(showData.id).then((data) => (episodesData = data));
 
@@ -54,15 +49,14 @@ export default function Main() {
       id: showData.id,
       formattedShow: formatShow(showData),
       seasonsInfo,
-      seasonsEpisodes,
-      // seasons: formatSeasons(episodesData),
+      episodes,
     });
   };
 
   const replaceEpisode = (episode) => {
     console.log("episode :>> ", episode);
-    show.seasonsEpisodes.splice(
-      show.seasonsEpisodes.findIndex(
+    show.episodes.splice(
+      show.episodes.findIndex(
         (e) => e.number === episode.number && e.season === episode.season
       ),
       1,
@@ -92,7 +86,6 @@ export default function Main() {
       episode
     );
 
-    // console.log("fetchedEpisode :>> ", fetchedEpisode);
     // throw error if no episode is returned
 
     replaceEpisode(fetchedEpisode);
@@ -105,17 +98,17 @@ export default function Main() {
       {Object.keys(show.formattedShow).length &&
       show.id &&
       show.seasonsInfo.length &&
-      show.seasonsEpisodes.length ? (
+      show.episodes.length ? (
         <div>
           <SearchBar onSearch={(value) => onSearch(value)} />
           <Show currentShow={show.formattedShow} />
           <Replace
-            seasonsEpisodes={show.seasonsEpisodes}
+            episodes={show.episodes}
             onReplace={(showName, season, episode) =>
               onReplace(showName, season, episode)
             }
           />
-          <Seasons seasonsEpisodes={show.seasonsEpisodes} />
+          <Seasons episodes={show.episodes} />
         </div>
       ) : (
         <h1>loading</h1>
