@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function Replace({ seasons, onReplace }) {
+export default function Replace({ seasonsInfo, onReplace }) {
   const [values, setValues] = useState({
     searchValue: "",
     selectedSeason: 1,
@@ -8,7 +8,6 @@ export default function Replace({ seasons, onReplace }) {
   });
 
   const handleSeasonChange = (event) => {
-    console.log("event.target :>> ", event.target);
     return setValues({
       selectedSeason: event.target.selectedIndex + 1,
       selectedEpisode: 1,
@@ -43,8 +42,8 @@ export default function Replace({ seasons, onReplace }) {
             className="seasons"
             onChange={handleSeasonChange}
           >
-            {seasons.map((s) => (
-              <option key={`season-${s.season}`}>Season {s.season}</option>
+            {seasonsInfo.map((_, index) => (
+              <option key={`season-${index + 1}`}>Season {index + 1}</option>
             ))}
           </select>
           <select
@@ -52,8 +51,10 @@ export default function Replace({ seasons, onReplace }) {
             className="episodes"
             onChange={handleEpisodeChange}
           >
-            {seasons[values.selectedSeason - 1].episodes.map((e) => (
-              <option key={`episode-${e.number}`}>Episode {e.number}</option>
+            {[
+              ...Array(seasonsInfo[values.selectedSeason - 1].episodeOrder),
+            ].map((_, index) => (
+              <option key={`episode-${index + 1}`}>Episode {index + 1}</option>
             ))}
           </select>
         </div>

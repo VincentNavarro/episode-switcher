@@ -4,6 +4,7 @@ import {
   getShowByName,
   getEpisodesById,
   getEpisodeByNumber,
+  getSeasonsById,
 } from "../../services/tv-maze-api-client";
 import {
   formatSeasons,
@@ -19,14 +20,17 @@ export default function Main() {
   const initialState = {
     formattedShow: {},
     id: "",
-    seasons: [],
+    // seasons: [],
+    seasonsInfo: [],
+    seasonsEpisodes: [],
   };
 
   const [show, setShow] = useState(initialState);
 
   const fetchShowAndEpisodes = async (fetchedShow = {}) => {
     let showData;
-    let episodesData;
+    let seasonsInfo;
+    // let episodesData;
 
     if (!Object.keys(fetchedShow).length) {
       await getShowById(getRandomShowId()).then((data) => (showData = data));
@@ -34,23 +38,26 @@ export default function Main() {
       showData = fetchedShow;
     }
 
-    await getEpisodesById(showData.id).then((data) => (episodesData = data));
+    await getSeasonsById(showData.id).then((data) => (seasonsInfo = data));
+
+    // await getEpisodesById(showData.id).then((data) => (episodesData = data));
 
     setShow({
       ...show,
       id: showData.id,
       formattedShow: formatSeries(showData),
-      seasons: formatSeasons(episodesData),
+      seasonsInfo,
+      // seasons: formatSeasons(episodesData),
     });
   };
 
-  const replaceEpisode = (episode) => {
-    show.seasons[episode.season - 1].episodes.splice(
-      episode.season - 1,
-      1,
-      episode
-    );
-  };
+  // const replaceEpisode = (episode) => {
+  //   show.seasons[episode.season - 1].episodes.splice(
+  //     episode.season - 1,
+  //     1,
+  //     episode
+  //   );
+  // };
 
   const onSearch = useCallback(async (value) => {
     const result = await getShowByName(value);
@@ -74,7 +81,7 @@ export default function Main() {
 
     // throw error if no episode is returned
 
-    replaceEpisode(fetchedEpisode);
+    // replaceEpisode(fetchedEpisode);
   });
 
   useEffect(() => fetchShowAndEpisodes(), []);
@@ -86,7 +93,7 @@ export default function Main() {
           <SearchBar onSearch={(value) => onSearch(value)} />
           <Series currentSeries={show.formattedShow} />
           <Replace
-            seasons={show.seasons}
+            seasonsInfo={show.seasonsInfo}
             onReplace={(showName, season, episode) =>
               onReplace(showName, season, episode)
             }

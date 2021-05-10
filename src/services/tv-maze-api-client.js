@@ -20,8 +20,20 @@ export const getEpisodesById = async (showId) => {
   );
 };
 
-export const getEpisodeByNumber = async (id, season, episode) => {
+export const getEpisodeByNumber = async (showId, season, episode) => {
   return fetch(
-    `${BASE_URL}/shows/${id}/episodebynumber?season=${season}&number=${episode}`
+    `${BASE_URL}/shows/${showId}/episodebynumber?season=${season}&number=${episode}`
   ).then((response) => response.json());
+};
+
+export const getSeasonsById = async (showId) => {
+  return fetch(`${BASE_URL}/shows/${showId}/seasons`).then((response) =>
+    response.json()
+  );
+};
+
+export const getEpisodesBySeasonId = async (seasonId) => {
+  return fetch(`${BASE_URL}/seasons/${seasonId}/episodes`).then((response) =>
+    response.json()
+  );
 };
