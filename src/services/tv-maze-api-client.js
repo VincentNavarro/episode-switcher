@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://api.tvmaze.com";
+const BASE_URL = "https://api.tvmaze.com";
 
 export const getShowByName = async (name) => {
   const response = await axios({
