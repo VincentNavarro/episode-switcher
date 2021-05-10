@@ -2,13 +2,13 @@ import { formatDate, formatSummary } from "../../components/utils/formatters";
 
 export const getRandomShowId = () => Math.floor(Math.random() * 55000) + 1;
 
-export const formatSeries = (series) => {
+export const formatShow = (show) => {
   return {
-    name: series.name,
-    genres: series.genres && series.genres.length ? series.genres : [],
-    premiered: series.premiered ? formatDate(series.premiered) : "",
-    summary: series.summary ? formatSummary(series.summary) : "",
-    image: series.image && series.image.medium ? series.image.medium : "",
+    name: show.name,
+    genres: show.genres && show.genres.length ? show.genres : [],
+    premiered: show.premiered ? formatDate(show.premiered) : "",
+    summary: show.summary ? formatSummary(show.summary) : "",
+    image: show.image && show.image.medium ? show.image.medium : "",
   };
 };
 

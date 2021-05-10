@@ -9,12 +9,13 @@ import {
 } from "../../services/tv-maze-api-client";
 import {
   formatSeasons,
-  formatSeries,
+  formatShow,
   getRandomShowId,
 } from "../../services/utils/tv-maze-util";
 import Replace from "../replace/replace";
 import SearchBar from "../searchBar/search-bar";
-import Series from "../series/series";
+import Seasons from "../seasons/seasons";
+import Show from "../show/show";
 import { formatSearch } from "../utils/formatters";
 
 export default function Main() {
@@ -49,12 +50,14 @@ export default function Main() {
 
     // console.log("seasonsEpisodes :>> ", seasonsEpisodes);
 
+    // console.log("seasonsEpisodes :>> ", seasonsEpisodes);
+
     // await getEpisodesById(showData.id).then((data) => (episodesData = data));
 
     setShow({
       ...show,
       id: showData.id,
-      formattedShow: formatSeries(showData),
+      formattedShow: formatShow(showData),
       seasonsInfo,
       seasonsEpisodes,
       // seasons: formatSeasons(episodesData),
@@ -99,18 +102,27 @@ export default function Main() {
 
   return (
     <main>
-      {show !== initialState ? (
+      {Object.keys(show.formattedShow).length &&
+      show.id &&
+      show.seasonsInfo.length &&
+      show.seasonsEpisodes ? (
         <div>
           <SearchBar onSearch={(value) => onSearch(value)} />
-          <Series currentSeries={show.formattedShow} />
+          <Show currentShow={show.formattedShow} />
           <Replace
             seasonsInfo={show.seasonsInfo}
             onReplace={(showName, season, episode) =>
               onReplace(showName, season, episode)
             }
           />
+          <Seasons
+            seasonsInfo={show.seasonsInfo}
+            seasonsEpisodes={show.seasonsEpisodes}
+          />
         </div>
-      ) : null}
+      ) : (
+        <h1>loading</h1>
+      )}
     </main>
   );
 }
