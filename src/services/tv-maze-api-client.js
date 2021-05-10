@@ -51,7 +51,6 @@ export const getEpisodeByNumber = async (showId, season, number) => {
     });
     return await response.data;
   } catch (error) {
-    console.error(error);
     if (error.response) {
       return { error: true, type: "match" };
     }

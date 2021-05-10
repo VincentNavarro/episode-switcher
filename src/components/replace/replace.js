@@ -11,14 +11,14 @@ export default function Replace({ episodes, onReplace }) {
 
   const handleSeasonChange = (event) => {
     return setValues({
+      ...values,
       selectedSeason: event.target.selectedIndex + 1,
-      selectedEpisode: 1,
     });
   };
 
   const handleEpisodeChange = (event) =>
     setValues({
-      selectedSeason: values.selectedSeason,
+      ...values,
       selectedEpisode: event.target.selectedIndex + 1,
     });
 
