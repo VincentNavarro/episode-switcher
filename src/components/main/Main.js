@@ -5,6 +5,7 @@ import {
   getEpisodesById,
   getEpisodeByNumber,
   getSeasonsById,
+  getEpisodesBySeasonId,
 } from "../../services/tv-maze-api-client";
 import {
   formatSeasons,
@@ -28,9 +29,9 @@ export default function Main() {
   const [show, setShow] = useState(initialState);
 
   const fetchShowAndEpisodes = async (fetchedShow = {}) => {
+    const seasonsEpisodes = [];
     let showData;
     let seasonsInfo;
-    // let episodesData;
 
     if (!Object.keys(fetchedShow).length) {
       await getShowById(getRandomShowId()).then((data) => (showData = data));
@@ -40,6 +41,14 @@ export default function Main() {
 
     await getSeasonsById(showData.id).then((data) => (seasonsInfo = data));
 
+    seasonsInfo.map(async (season) => {
+      await getEpisodesBySeasonId(season.id).then((data) =>
+        seasonsEpisodes.push(data)
+      );
+    });
+
+    // console.log("seasonsEpisodes :>> ", seasonsEpisodes);
+
     // await getEpisodesById(showData.id).then((data) => (episodesData = data));
 
     setShow({
@@ -47,6 +56,7 @@ export default function Main() {
       id: showData.id,
       formattedShow: formatSeries(showData),
       seasonsInfo,
+      seasonsEpisodes,
       // seasons: formatSeasons(episodesData),
     });
   };
@@ -68,6 +78,7 @@ export default function Main() {
   }, []);
 
   const onReplace = useCallback(async (showName, season, episode) => {
+    console.log("show.seasonsEpisodes :>> ", show.seasonsEpisodes);
     const showResult = await getShowByName(showName);
     const fetchedShow = formatSearch(showResult);
 
