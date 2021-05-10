@@ -5,7 +5,7 @@ export default function Show({ currentShow }) {
 
   const formattedGenres =
     currentShow.genres && currentShow.genres.length
-      ? `${currentShow.genres.join(", ")} | `
+      ? `${currentShow.genres.join(", ")}`
       : "";
 
   const formattedPremieredDate = premiered ? `Premiered on ${premiered}` : "";
@@ -19,8 +19,9 @@ export default function Show({ currentShow }) {
         <div className="col-sm-8">
           <h1>{name}</h1>
           <div className="showInfo">
-            {formattedGenres}
-            {formattedPremieredDate}
+            {`${formattedGenres}${
+              formattedGenres && formattedPremieredDate ? " | " : ""
+            }${formattedPremieredDate}`}
           </div>
           <div className="showSummary">{summary}</div>
         </div>
