@@ -1,9 +1,13 @@
-.image {
+.episodeImage {
     display: flex;
-    width: 210px;
-    height: 295px;
+    width: 250px;
+    height: 140px;
     justify-content: center;
     align-items: center;
     background-color: grey;
     color: white;
+}
+
+.episodeSubtitle{
+    color: grey;
 }

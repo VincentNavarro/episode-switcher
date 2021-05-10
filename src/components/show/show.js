@@ -13,11 +13,11 @@ export default function Show({ currentShow }) {
   return (
     <div className="container">
       <div className="row">
-        <div className="image">
-          {image ? <img src={image} alt="Show Preview" /> : "N/A"}
+        <div className="seasonImage">
+          {image ? <img src={image} alt="Show Preview" /> : "NA"}
         </div>
         <div className="col-sm-8">
-          <h1 className="showName">{name}</h1>
+          <h1>{name}</h1>
           <div className="showInfo">
             {formattedGenres}
             {formattedPremieredDate}

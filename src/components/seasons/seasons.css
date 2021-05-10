@@ -1,9 +1,7 @@
-.image {
-    display: flex;
-    width: 210px;
-    height: 295px;
-    justify-content: center;
-    align-items: center;
-    background-color: grey;
-    color: white;
+.seasonContainer {
+    padding: 30px 0px;
+}
+
+.seasonSubtitle {
+    color: grey;
 }

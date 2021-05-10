@@ -11,22 +11,28 @@ export default function SearchBar({ onSearch }) {
   };
 
   return (
-    <div className="container searchBar">
-      <div className="row">
-        <div className="col-sm-4">
-          <h2>Episode Switcher</h2>
-        </div>
-        <div className="col-sm-3">
-          <input
-            className="searchBox"
-            type="search"
-            placeholder="Enter a TV show"
-            onChange={handleSearchChange}
-            onKeyPress={handleKeypress}
-          />
-        </div>
-        <div className="col-sm-4 searchButton">
-          <button onClick={() => onSearch(search)}>Search</button>
+    <div className="searchBar">
+      <div className="searchContainer container">
+        <div className="row align-items-center">
+          <div className="col-sm-6">
+            <h2 className="appTitle">Episode Switcher</h2>
+          </div>
+          <div className="row">
+            <div className="searchBoxContainer">
+              <input
+                className="searchBox"
+                type="search"
+                placeholder="Enter a TV show"
+                onChange={handleSearchChange}
+                onKeyPress={handleKeypress}
+              />
+            </div>
+            <div className="searchButtonContainer">
+              <button className="searchButton" onClick={() => onSearch(search)}>
+                Search
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

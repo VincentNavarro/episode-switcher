@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { formatSeasonsCount } from "../../services/utils/tv-maze-util";
+import "./replace.css";
 
 export default function Replace({ episodes, onReplace }) {
   const [values, setValues] = useState({
@@ -35,7 +36,7 @@ export default function Replace({ episodes, onReplace }) {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="replaceContainer row">
         <div className="col">Replace</div>
         <div className="col">
           <select
@@ -47,6 +48,8 @@ export default function Replace({ episodes, onReplace }) {
               <option key={`season-${index + 1}`}>Season {index + 1}</option>
             ))}
           </select>
+        </div>
+        <div className="col">
           <select
             name="episodes"
             className="episodes"
@@ -63,6 +66,7 @@ export default function Replace({ episodes, onReplace }) {
             ))}
           </select>
         </div>
+        <div className="col">with</div>
         <div className="col">
           <input
             className="searchBox"
@@ -73,6 +77,7 @@ export default function Replace({ episodes, onReplace }) {
         </div>
         <div className="col">
           <button
+            className="button"
             onClick={() =>
               onReplace(
                 values.searchValue,

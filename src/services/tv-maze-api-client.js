@@ -40,16 +40,23 @@ export const getEpisodesById = async (showId) => {
 };
 
 export const getEpisodeByNumber = async (showId, season, number) => {
-  const response = await axios({
-    url: `${BASE_URL}/shows/${showId}/episodebynumber`,
-    params: { season, number },
-    method: "GET",
-    header: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  return await response.data;
+  try {
+    const response = await axios({
+      url: `${BASE_URL}/shows/${showId}/episodebynumber`,
+      params: { season, number },
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.data;
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      return { error: true, type: "match" };
+    }
+    return { error: true, type: "show" };
+  }
 };
 
 export const getSeasonsById = async (showId) => {

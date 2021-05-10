@@ -1,0 +1,15 @@
+.button {
+    background-color: #262626;
+    border-radius: 2px;
+    color: white;
+    padding: 4px 25px;
+    border: none;
+}
+
+select {
+    width: 130px;
+}
+
+.replaceContainer {
+    text-align: center;
+}

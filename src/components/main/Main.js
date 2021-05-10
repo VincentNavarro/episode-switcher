@@ -5,17 +5,13 @@ import {
   getEpisodesById,
   getEpisodeByNumber,
   getSeasonsById,
-  getEpisodesBySeasonId,
 } from "../../services/tv-maze-api-client";
-import {
-  formatSeasons,
-  formatShow,
-  getRandomShowId,
-} from "../../services/utils/tv-maze-util";
+import { formatShow, getRandomShowId } from "../../services/utils/tv-maze-util";
 import Replace from "../replace/replace";
 import SearchBar from "../searchBar/search-bar";
 import Seasons from "../seasons/seasons";
 import Show from "../show/show";
+import Error from "../error/error";
 import { formatSearch } from "../utils/formatters";
 
 export default function Main() {
@@ -24,6 +20,7 @@ export default function Main() {
     id: "",
     seasonsInfo: [],
     episodes: [],
+    replaceError: false,
   };
 
   const [show, setShow] = useState(initialState);
@@ -42,8 +39,6 @@ export default function Main() {
 
     const episodes = await getEpisodesById(showData.id);
 
-    // await getEpisodesById(showData.id).then((data) => (episodesData = data));
-
     setShow({
       ...show,
       id: showData.id,
@@ -54,7 +49,6 @@ export default function Main() {
   };
 
   const replaceEpisode = (episode) => {
-    console.log("episode :>> ", episode);
     show.episodes.splice(
       show.episodes.findIndex(
         (e) => e.number === episode.number && e.season === episode.season
@@ -63,13 +57,12 @@ export default function Main() {
       episode
     );
 
-    setShow({ ...show });
+    setShow({ ...show, replaceError: false });
   };
 
   const onSearch = useCallback(async (value) => {
     const result = await getShowByName(value);
     const fetchedShow = formatSearch(result);
-    // Throw error here if fetchedShow is empty
 
     fetchShowAndEpisodes(fetchedShow);
   }, []);
@@ -78,17 +71,18 @@ export default function Main() {
     const showResult = await getShowByName(showName);
     const fetchedShow = formatSearch(showResult);
 
-    // throw error if no show name is returned
-
-    const fetchedEpisode = await getEpisodeByNumber(
+    const episodeFetchResponse = await getEpisodeByNumber(
       fetchedShow.id,
       season,
       episode
     );
 
-    // throw error if no episode is returned
-
-    replaceEpisode(fetchedEpisode);
+    episodeFetchResponse.error
+      ? setShow({
+          ...show,
+          replaceError: { ...episodeFetchResponse, name: showName },
+        })
+      : replaceEpisode(episodeFetchResponse);
   });
 
   useEffect(() => fetchShowAndEpisodes(), []);
@@ -108,6 +102,7 @@ export default function Main() {
               onReplace(showName, season, episode)
             }
           />
+          <Error onError={show.replaceError} />
           <Seasons episodes={show.episodes} />
         </div>
       ) : (

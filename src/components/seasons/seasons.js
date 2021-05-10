@@ -9,7 +9,7 @@ export default function Seasons({ episodes }) {
 
   const renderSubtitle = (currentSeason) => {
     return (
-      <div className="subtitleSeason">
+      <div className="seasonSubtitle">
         {`${currentSeason.length} episodes | Aired ${
           currentSeason[0].airdate ? formatDate(currentSeason[0].airdate) : ""
         }`}
@@ -20,9 +20,11 @@ export default function Seasons({ episodes }) {
   return (
     <div className="container">
       {formatSeasonsCount(episodes).map((season) => (
-        <div key={`season-${season}`}>
+        <div className="seasonContainer" key={`season-${season}`}>
           <h3>{`Season ${season}`}</h3>
           {renderSubtitle(getCurrentSeason(season))}
+          <hr />
+
           {getCurrentSeason(season).map((episode) => (
             <Episodes episode={episode} key={`episode-${episode.number}`} />
           ))}

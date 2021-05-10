@@ -1,4 +1,4 @@
-.image {
+.seasonImage {
     display: flex;
     width: 210px;
     height: 295px;
@@ -7,3 +7,13 @@
     background-color: grey;
     color: white;
 }
+
+.container {
+    padding-top: 50px;
+}
+
+.showInfo {
+    padding: 0 0 20px 0;
+    color: grey;
+}
+
