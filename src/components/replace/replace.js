@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Replace({ seasons, onReplace }) {
   const [values, setValues] = useState({
+    searchValue: "",
     selectedSeason: 1,
     selectedEpisode: 1,
   });
@@ -19,6 +20,18 @@ export default function Replace({ seasons, onReplace }) {
       selectedSeason: values.selectedSeason,
       selectedEpisode: event.target.selectedIndex + 1,
     });
+
+  const handleSearchChange = (event) =>
+    setValues({ ...values, searchValue: event.target.value });
+
+  const handleKeypress = (event) => {
+    if (event.code === "Enter")
+      onReplace(
+        values.searchValue,
+        values.selectedSeason,
+        values.selectedEpisode
+      );
+  };
 
   return (
     <div className="container">
@@ -45,7 +58,25 @@ export default function Replace({ seasons, onReplace }) {
           </select>
         </div>
         <div className="col">
-          <button onClick={() => onReplace()}>Search</button>
+          <input
+            className="searchBox"
+            type="search"
+            onChange={handleSearchChange}
+            onKeyPress={handleKeypress}
+          />
+        </div>
+        <div className="col">
+          <button
+            onClick={() =>
+              onReplace(
+                values.searchValue,
+                values.selectedSeason,
+                values.selectedEpisode
+              )
+            }
+          >
+            Replace
+          </button>
         </div>
       </div>
     </div>

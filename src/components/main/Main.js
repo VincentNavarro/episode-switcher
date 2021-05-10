@@ -7,7 +7,6 @@ import {
 } from "../../services/tv-maze-api-client";
 import {
   formatSeasons,
-  formatSeasonsCount,
   formatSeries,
   getRandomShowId,
 } from "../../services/utils/tv-maze-util";
@@ -46,10 +45,11 @@ export default function Main() {
   };
 
   const replaceEpisode = (episode) => {
-    const episodeIDToReplace = show.episodes.find(
-      (e) => e.number === episode.number && e.season === episode.season
+    show.seasons[episode.season - 1].episodes.splice(
+      episode.season - 1,
+      1,
+      episode
     );
-    console.log("episodeIDToReplace :>> ", episodeIDToReplace);
   };
 
   const onSearch = useCallback(async (value) => {
@@ -74,9 +74,7 @@ export default function Main() {
 
     // throw error if no episode is returned
 
-    // get show by number (season and number)
-
-    // .replace in episode array the new episode
+    replaceEpisode(fetchedEpisode);
   });
 
   useEffect(() => fetchShowAndEpisodes(), []);
